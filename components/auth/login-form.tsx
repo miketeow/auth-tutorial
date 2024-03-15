@@ -28,6 +28,7 @@ const LoginForm = () => {
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   // got this oauth not link in login only , not register, later try with register
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
@@ -44,7 +45,7 @@ const LoginForm = () => {
     setError("");
     setSuccess("");
     startTransition(() => {
-      login(values)
+      login(values, callbackUrl)
         .then((data) => {
           if (data?.error) {
             form.reset();
